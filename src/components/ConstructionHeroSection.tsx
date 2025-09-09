@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Home, ArrowRight } from 'lucide-react';
+import { Home } from 'lucide-react';
 import CustomButton from './CustomButton';
 import { useState, useEffect, useRef } from 'react';
 

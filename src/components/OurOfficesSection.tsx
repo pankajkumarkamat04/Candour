@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { MapPin, Globe, Building2, Phone, Mail } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 export default function OurOfficesSection() {

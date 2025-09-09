@@ -121,7 +121,7 @@ export default function HeroSection() {
               Headquartered in the Kingdom, we specialize in delivering tailored, cost-effective supply chain and logistics solutions that meet the evolving demands of industrial operations—both locally and globally.
             </p>
             <p className="font-semibold text-orange-200">
-              We are committed to optimizing our clients' supply chains by:
+              We are committed to optimizing our clients&apos; supply chains by:
             </p>
             <ul className="list-disc list-inside space-y-1 ml-2 sm:ml-4 text-sm sm:text-base">
               <li>Building strong, reliable supplier relationships</li>

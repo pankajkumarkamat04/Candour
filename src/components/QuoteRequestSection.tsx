@@ -54,7 +54,7 @@ export default function QuoteRequestSection() {
               {/* Form Title */}
               <div className="text-center mb-6 sm:mb-7 md:mb-8">
                 <h3 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">Get Your Quote</h3>
-                <p className="text-gray-300 text-sm sm:text-base md:text-lg">Fill out the form below and we'll get back to you within 24 hours</p>
+                <p className="text-gray-300 text-sm sm:text-base md:text-lg">Fill out the form below and we&apos;ll get back to you within 24 hours</p>
               </div>
 
               {/* Contact Information */}
@@ -163,10 +163,10 @@ export default function QuoteRequestSection() {
                 Request a Quote Today
               </h2>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed">
-                At CANDOUR, we deliver faster quotes, quicker responses, and on-time deliveries—because your operations can't afford delays.
+                At CANDOUR, we deliver faster quotes, quicker responses, and on-time deliveries—because your operations can&apos;t afford delays.
               </p>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mt-3 sm:mt-4">
-                We thrive on complexity, offering reliable solutions for projects of all scales and environments—on land, over water, or across geographically diverse regions. Backed by long-term guarantees, cutting-edge technologies, and a proven portfolio of successful industrial supply projects, we're the partner construction and industrial companies count on to perform.
+                We thrive on complexity, offering reliable solutions for projects of all scales and environments—on land, over water, or across geographically diverse regions. Backed by long-term guarantees, cutting-edge technologies, and a proven portfolio of successful industrial supply projects, we&apos;re the partner construction and industrial companies count on to perform.
               </p>
             </div>
 

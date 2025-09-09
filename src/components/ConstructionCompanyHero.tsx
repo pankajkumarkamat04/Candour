@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { MapPin, CheckCircle } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 
 type TabKey = 'Industry Expertise' | 'Product Range' | 'Responsive Service' | 'Tailored Solutions' | 'Quality Commitment';

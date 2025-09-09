@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, Wrench, Hammer, HardHat, Settings, ArrowRight, Factory, Zap, Fuel, Lightbulb, Target, Cog, Globe, Clock, DollarSign, Shield, Award } from 'lucide-react';
+import { Home, Factory, Lightbulb, Target, Cog, Globe, Clock, DollarSign, Shield, Award } from 'lucide-react';
 import CustomButton from './CustomButton';
 import { useState, useEffect, useRef } from 'react';
 

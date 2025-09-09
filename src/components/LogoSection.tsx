@@ -66,7 +66,7 @@ export default function LogoSection() {
                 Trusted by Industry Leaders
               </h2>
               <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
-                We're proud to partner with leading companies across various industries, delivering reliable MRO solutions and procurement services.
+                We&apos;re proud to partner with leading companies across various industries, delivering reliable MRO solutions and procurement services.
               </p>
               <p className="text-gray-500 text-sm sm:text-base">
                 Join hundreds of satisfied customers who trust Candour International for their industrial procurement needs.

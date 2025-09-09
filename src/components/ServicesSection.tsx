@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Building2, Wrench, HardHat } from 'lucide-react';
-import Image from 'next/image';
 
 const services = [
     {
