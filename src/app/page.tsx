@@ -6,6 +6,8 @@ import QualityServicesSection from '@/components/QualityServicesSection';
 import IndustriesWeServeSection from '@/components/IndustriesWeServeSection';
 import ConstructionHeroSection2 from '@/components/ConstructionHeroSection2';
 import QuoteRequestSection from '@/components/QuoteRequestSection';
+import LogoSection from '@/components/LogoSection';
+import OurOfficesSection from '@/components/OurOfficesSection';
 import ServicesPricingSection from '@/components/ServicesPricingSection';
 
 export default function Home() {
@@ -20,6 +22,8 @@ export default function Home() {
       <IndustriesWeServeSection />
       <ConstructionHeroSection2 />
       <QuoteRequestSection />
+      <LogoSection />
+      <OurOfficesSection />
     </div>
   );
 }
