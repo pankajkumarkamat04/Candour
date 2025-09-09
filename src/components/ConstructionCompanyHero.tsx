@@ -2,12 +2,48 @@
 
 import Image from 'next/image';
 import { MapPin, CheckCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 type TabKey = 'Industry Expertise' | 'Product Range' | 'Responsive Service' | 'Tailored Solutions' | 'Quality Commitment';
 
 export default function ConstructionCompanyHero() {
   const [activeTab, setActiveTab] = useState<TabKey>('Industry Expertise');
+  const [isVisible, setIsVisible] = useState({
+    mainHeading: false,
+    tabContent: false,
+    statistics: false
+  });
+
+  const mainHeadingRef = useRef<HTMLHeadingElement>(null);
+  const tabContentRef = useRef<HTMLDivElement>(null);
+  const statisticsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target === mainHeadingRef.current) {
+            setIsVisible(prev => ({ ...prev, mainHeading: true }));
+          } else if (entry.target === tabContentRef.current) {
+            setIsVisible(prev => ({ ...prev, tabContent: true }));
+          } else if (entry.target === statisticsRef.current) {
+            setIsVisible(prev => ({ ...prev, statistics: true }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    if (mainHeadingRef.current) observer.observe(mainHeadingRef.current);
+    if (tabContentRef.current) observer.observe(tabContentRef.current);
+    if (statisticsRef.current) observer.observe(statisticsRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   const tabContent: Record<TabKey, { title: string; description: string }> = {
     'Industry Expertise': {
@@ -33,7 +69,7 @@ export default function ConstructionCompanyHero() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden">
+    <div className="relative bg-black overflow-hidden">
       {/* Diagonal Pattern Background */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-800/20 to-transparent transform rotate-12 scale-150"></div>
@@ -53,7 +89,14 @@ export default function ConstructionCompanyHero() {
             </h2>
           </div>
           
-          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight px-4">
+          <h1 
+            ref={mainHeadingRef}
+            className={`text-white text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight px-4 transition-all duration-1000 ${
+              isVisible.mainHeading 
+                ? 'opacity-100 translate-y-0 scale-100' 
+                : 'opacity-0 translate-y-8 scale-95'
+            }`}
+          >
             Why Candour?
           </h1>
         </div>
@@ -63,7 +106,7 @@ export default function ConstructionCompanyHero() {
           {/* Left Side - Main Image with Address Button */}
           <div className="relative">
             {/* Main Construction Workers Image */}
-            <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px]">
+            <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-[5/4]">
               <Image
                 src="/banner.jpg"
                 alt="Construction workers discussing blueprints"
@@ -115,7 +158,14 @@ export default function ConstructionCompanyHero() {
           <div className="space-y-6 sm:space-y-8">
 
             {/* Benefits Tabs */}
-            <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+            <div 
+              ref={tabContentRef}
+              className={`space-y-4 sm:space-y-6 mb-6 sm:mb-8 transition-all duration-1200 delay-200 ${
+                isVisible.tabContent 
+                  ? 'opacity-100 translate-x-0' 
+                  : 'opacity-0 translate-x-8'
+              }`}
+            >
               {/* Tab Navigation */}
               <div className="flex flex-wrap gap-2 sm:gap-4 border-b border-gray-700">
                 {Object.keys(tabContent).map((tabKey) => (
@@ -152,7 +202,14 @@ export default function ConstructionCompanyHero() {
             </div>
 
             {/* Statistics */}
-            <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 lg:space-x-8">
+            <div 
+              ref={statisticsRef}
+              className={`flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 lg:space-x-8 transition-all duration-1000 delay-500 ${
+                isVisible.statistics 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-12 scale-90'
+              }`}
+            >
               <div className="text-center">
                 <div className="text-orange-500 text-4xl sm:text-5xl lg:text-6xl font-bold">100%</div>
                 <div className="text-white text-sm sm:text-base lg:text-lg font-semibold">Customer Satisfaction</div>
@@ -175,7 +232,7 @@ export default function ConstructionCompanyHero() {
 
 
       {/* Building Graphic Overlay - Bottom Left */}
-      <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[500px] lg:h-[600px] opacity-20 z-5">
+      <div className="absolute bottom-0 left-0 w-64 aspect-square sm:w-80 md:w-96 lg:w-[500px] lg:aspect-[5/6] opacity-20 z-5">
         <div className="w-full h-full bg-white transform rotate-12 scale-150">
           {/* Building silhouette - simplified representation */}
           <div className="w-full h-full relative">

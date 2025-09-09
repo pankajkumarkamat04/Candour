@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Building2, Wrench, HardHat } from 'lucide-react';
 import Image from 'next/image';
 
@@ -29,20 +29,50 @@ const services = [
 ];
 
 export default function ServicesSection() {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState({
+        header: false,
+        services: false
+    });
+
+    const headerRef = useRef<HTMLDivElement>(null);
+    const servicesRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsVisible(true);
-        }, 100);
-        return () => clearTimeout(timer);
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    if (entry.target === headerRef.current) {
+                        setIsVisible(prev => ({ ...prev, header: true }));
+                    } else if (entry.target === servicesRef.current) {
+                        setIsVisible(prev => ({ ...prev, services: true }));
+                    }
+                }
+            });
+        }, observerOptions);
+
+        if (headerRef.current) observer.observe(headerRef.current);
+        if (servicesRef.current) observer.observe(servicesRef.current);
+
+        return () => observer.disconnect();
     }, []);
 
     return (
         <div className="py-10 sm:py-16 lg:py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+                <div 
+                    ref={headerRef}
+                    className={`text-center mb-8 sm:mb-12 lg:mb-16 transition-all duration-1000 ${
+                        isVisible.header 
+                            ? 'opacity-100 translate-y-0 scale-100' 
+                            : 'opacity-0 translate-y-8 scale-95'
+                    }`}
+                >
                     <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
                         <Building2 className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
                     </div>
@@ -52,11 +82,26 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Services Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                <div 
+                    ref={servicesRef}
+                    className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 transition-all duration-1200 delay-300 ${
+                        isVisible.services 
+                            ? 'opacity-100 translate-y-0' 
+                            : 'opacity-0 translate-y-12'
+                    }`}
+                >
                     {services.map((service, index) => (
                         <div
                             key={index}
-                            className='group cursor-pointer'>
+                            className={`group cursor-pointer transition-all duration-500 ${
+                                isVisible.services 
+                                    ? 'opacity-100 translate-y-0 scale-100' 
+                                    : 'opacity-0 translate-y-8 scale-95'
+                            }`}
+                            style={{ 
+                                transitionDelay: isVisible.services ? `${index * 200}ms` : '0ms'
+                            }}
+                        >
                             <div 
                                 className='w-full h-48 sm:h-56 lg:h-64 xl:h-100 bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105 overflow-hidden'
                                 style={{ backgroundImage: `url(${service.image})` }}

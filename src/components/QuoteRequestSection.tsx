@@ -1,8 +1,40 @@
 'use client';
 
 import { ChevronDown, HardHat } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function QuoteRequestSection() {
+  const [isVisible, setIsVisible] = useState({
+    form: false,
+    content: false
+  });
+
+  const formRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target === formRef.current) {
+            setIsVisible(prev => ({ ...prev, form: true }));
+          } else if (entry.target === contentRef.current) {
+            setIsVisible(prev => ({ ...prev, content: true }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    if (formRef.current) observer.observe(formRef.current);
+    if (contentRef.current) observer.observe(contentRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="bg-gray-100 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
@@ -10,7 +42,14 @@ export default function QuoteRequestSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
           
           {/* Left Side - Simple Quote Form */}
-          <div className="bg-gray-900 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+          <div 
+            ref={formRef}
+            className={`bg-gray-900 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 transition-all duration-1000 ${
+              isVisible.form 
+                ? 'opacity-100 translate-x-0 scale-100' 
+                : 'opacity-0 -translate-x-8 scale-95'
+            }`}
+          >
             <div className="space-y-4 sm:space-y-5 md:space-y-6">
               {/* Form Title */}
               <div className="text-center mb-6 sm:mb-7 md:mb-8">
@@ -104,7 +143,14 @@ export default function QuoteRequestSection() {
           </div>
 
           {/* Right Side - Light Information Section */}
-          <div className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 relative overflow-hidden">
+          <div 
+            ref={contentRef}
+            className={`bg-white p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 relative overflow-hidden transition-all duration-1000 delay-300 ${
+              isVisible.content 
+                ? 'opacity-100 translate-x-0 scale-100' 
+                : 'opacity-0 translate-x-8 scale-95'
+            }`}
+          >
             {/* Header */}
             <div className="mb-6 sm:mb-7 md:mb-8">
               <div className="flex items-center mb-3 sm:mb-4">
@@ -113,7 +159,7 @@ export default function QuoteRequestSection() {
                   Need It Fast?
                 </span>
               </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-4 sm:mb-5 md:mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black mb-4 sm:mb-5 md:mb-6 animate-pulse-slow">
                 Request a Quote Today
               </h2>
               <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed">

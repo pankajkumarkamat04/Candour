@@ -2,8 +2,41 @@
 
 import Image from 'next/image';
 import { MapPin, Globe, Building2, Phone, Mail } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function OurOfficesSection() {
+  const [isVisible, setIsVisible] = useState({
+    header: false,
+    map: false
+  });
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target === headerRef.current) {
+            setIsVisible(prev => ({ ...prev, header: true }));
+          } else if (entry.target === mapRef.current) {
+            setIsVisible(prev => ({ ...prev, map: true }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (mapRef.current) observer.observe(mapRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   const offices = [
     {
       id: 1,
@@ -61,14 +94,28 @@ export default function OurOfficesSection() {
     <div className="bg-gray-50 py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12 lg:mb-16">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-12 lg:mb-16 transition-all duration-1000 ${
+            isVisible.header 
+              ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 translate-y-8 scale-95'
+          }`}
+        >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
             Global FootPrint
           </h2>
         </div>
 
         {/* Map with Office Location Pins */}
-        <div className="relative w-full h-96 lg:h-[600px]">
+        <div 
+          ref={mapRef}
+          className={`relative w-full h-96 lg:h-[600px] transition-all duration-1200 delay-300 ${
+            isVisible.map 
+              ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 translate-y-12 scale-95'
+          }`}
+        >
           {/* World Map Image */}
           <Image
             src="/map.jpg"

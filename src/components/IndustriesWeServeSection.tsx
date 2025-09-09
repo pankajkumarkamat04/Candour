@@ -2,8 +2,41 @@
 
 import Image from 'next/image';
 import { Factory, Zap, Fuel, HardHat, Settings, Wrench, Cog, Shield, Award, Globe } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function IndustriesWeServeSection() {
+  const [isVisible, setIsVisible] = useState({
+    header: false,
+    industries: false
+  });
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const industriesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target === headerRef.current) {
+            setIsVisible(prev => ({ ...prev, header: true }));
+          } else if (entry.target === industriesRef.current) {
+            setIsVisible(prev => ({ ...prev, industries: true }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (industriesRef.current) observer.observe(industriesRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   const industries = [
     {
       id: 1,
@@ -99,7 +132,14 @@ export default function IndustriesWeServeSection() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="text-center mb-12 lg:mb-16">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-12 lg:mb-16 transition-all duration-1000 ${
+            isVisible.header 
+              ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 translate-y-8 scale-95'
+          }`}
+        >
           <div className="flex flex-col items-center justify-center mb-8">
             <div className="relative">
               <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 shadow-lg">
@@ -120,12 +160,25 @@ export default function IndustriesWeServeSection() {
         </div>
 
         {/* Industries Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+        <div 
+          ref={industriesRef}
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8 transition-all duration-1200 delay-300 ${
+            isVisible.industries 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
           {industries.map((industry, index) => (
             <div 
               key={industry.id} 
-              className="group relative bg-white shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden transform hover:-translate-y-2 hover:scale-105"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`group relative bg-white shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden transform hover:-translate-y-2 hover:scale-105 ${
+                isVisible.industries 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-8 scale-95'
+              }`}
+              style={{ 
+                transitionDelay: isVisible.industries ? `${index * 100}ms` : '0ms'
+              }}
             >
               {/* Image */}
               <div className="relative h-56 w-full overflow-hidden">

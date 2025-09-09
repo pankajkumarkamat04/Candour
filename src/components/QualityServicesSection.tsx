@@ -2,8 +2,51 @@
 
 import { Home, Wrench, Hammer, HardHat, Settings, ArrowRight, Factory, Zap, Fuel, Lightbulb, Target, Cog, Globe, Clock, DollarSign, Shield, Award } from 'lucide-react';
 import CustomButton from './CustomButton';
+import { useState, useEffect, useRef } from 'react';
 
 export default function QualityServicesSection() {
+  const [isVisible, setIsVisible] = useState({
+    header: false,
+    description: false,
+    services: false,
+    cta: false
+  });
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target === headerRef.current) {
+            setIsVisible(prev => ({ ...prev, header: true }));
+          } else if (entry.target === descriptionRef.current) {
+            setIsVisible(prev => ({ ...prev, description: true }));
+          } else if (entry.target === servicesRef.current) {
+            setIsVisible(prev => ({ ...prev, services: true }));
+          } else if (entry.target === ctaRef.current) {
+            setIsVisible(prev => ({ ...prev, cta: true }));
+          }
+        }
+      });
+    }, observerOptions);
+
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (descriptionRef.current) observer.observe(descriptionRef.current);
+    if (servicesRef.current) observer.observe(servicesRef.current);
+    if (ctaRef.current) observer.observe(ctaRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   const services = [
     {
       icon: <Lightbulb className="w-8 h-8" />,
@@ -111,7 +154,14 @@ export default function QualityServicesSection() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+        <div 
+          ref={headerRef}
+          className={`text-center mb-8 sm:mb-12 lg:mb-16 transition-all duration-1000 ${
+            isVisible.header 
+              ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 translate-y-8 scale-95'
+          }`}
+        >
           <div className="flex flex-col items-center justify-center mb-4 sm:mb-6">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
               <Home className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
@@ -124,16 +174,40 @@ export default function QualityServicesSection() {
         </div>
 
         {/* Company Description */}
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16 max-w-4xl mx-auto px-4">
+        <div 
+          ref={descriptionRef}
+          className={`text-center mb-8 sm:mb-12 lg:mb-16 max-w-4xl mx-auto px-4 transition-all duration-1200 delay-200 ${
+            isVisible.description 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-6'
+          }`}
+        >
           <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
             At Candour International, we go beyond procurement—we build partnerships that power progress. With over 15 years of experience and a solid presence across the UK, India, UAE, Oman, and Saudi Arabia, we are recognized as a premier engineering procurement brand with a global reputation for excellence.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12 lg:mb-16">
+        <div 
+          ref={servicesRef}
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 mb-8 sm:mb-12 lg:mb-16 transition-all duration-1200 delay-400 ${
+            isVisible.services 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
           {services.map((service, index) => (
-            <div key={index} className="bg-white p-6 sm:p-8 lg:p-10 xl:p-12 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer hover:scale-105 min-h-[220px] sm:min-h-[250px] lg:min-h-[280px] xl:min-h-[300px]">
+            <div 
+              key={index} 
+              className={`bg-white p-6 sm:p-8 lg:p-10 xl:p-12 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer hover:scale-105 min-h-[220px] sm:min-h-[250px] lg:min-h-[280px] xl:min-h-[300px] ${
+                isVisible.services 
+                  ? 'opacity-100 translate-y-0 scale-100' 
+                  : 'opacity-0 translate-y-8 scale-95'
+              }`}
+              style={{ 
+                transitionDelay: isVisible.services ? `${index * 100}ms` : '0ms'
+              }}
+            >
               <div className="flex flex-col items-center text-center h-full">
                 <div className="mb-4 sm:mb-6 text-black group-hover:text-orange-500 transition-colors duration-300">
                   {service.icon}
@@ -159,7 +233,14 @@ export default function QualityServicesSection() {
         </div>
 
         {/* Call to Action Button */}
-        <div className="flex justify-center px-4">
+        <div 
+          ref={ctaRef}
+          className={`flex justify-center px-4 transition-all duration-1000 delay-600 ${
+            isVisible.cta 
+              ? 'opacity-100 translate-y-0 scale-100' 
+              : 'opacity-0 translate-y-8 scale-95'
+          }`}
+        >
           <CustomButton text="More About Us" />
         </div>
       </div>
