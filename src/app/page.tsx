@@ -8,6 +8,7 @@ import ConstructionHeroSection2 from '@/components/ConstructionHeroSection2';
 import QuoteRequestSection from '@/components/QuoteRequestSection';
 import LogoSection from '@/components/LogoSection';
 import OurOfficesSection from '@/components/OurOfficesSection';
+import Footer from '@/components/Footer';
 import ServicesPricingSection from '@/components/ServicesPricingSection';
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
       <QuoteRequestSection />
       <LogoSection />
       <OurOfficesSection />
+      <Footer />
     </div>
   );
 }
