@@ -30,7 +30,7 @@ const services = [
 
 export default function ServicesPricingSection() {
     return (
-        <div className="py-8 sm:py-12 lg:py-16 bg-gray-50 relative overflow-hidden">
+        <div className="py-8 sm:py-12 lg:py-16 bg-gray-50 relative overflow-hidden md:-mb-25">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image

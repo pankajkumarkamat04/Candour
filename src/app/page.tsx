@@ -1,6 +1,7 @@
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
 import ConstructionHeroSection from '@/components/ConstructionHeroSection';
+import ConstructionCompanyHero from '@/components/ConstructionCompanyHero';
 import ServicesPricingSection from '@/components/ServicesPricingSection';
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <ServicesSection />
       <ConstructionHeroSection />
       <ServicesPricingSection />
+      <ConstructionCompanyHero />
     </div>
   );
 }
