@@ -33,16 +33,16 @@ export default function Header() {
   }, []);
 
   const navigationLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'About Us', href: '#' },
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/about' },
     { 
       name: 'Divisions', 
       href: '#',
       hasDropdown: true,
       submenu: [
-        { name: 'MRO', href: '#' },
-        { name: 'Tools', href: '#' },
-        { name: 'Projects', href: '#' }
+        { name: 'MRO', href: '/mro' },
+        { name: 'Tools', href: '/tools' },
+        { name: 'Projects', href: '/projects' }
       ]
     },
     { 
@@ -50,8 +50,8 @@ export default function Header() {
       href: '#',
       hasDropdown: true,
       submenu: [
-        { name: 'KEN Tools', href: '#' },
-        { name: 'KolArc Welding', href: '#' }
+        { name: 'KEN Tools', href: '/brands/ken' },
+        { name: 'KolArc Welding', href: '/brands/kolarc' }
       ]
     },
     { name: 'Blog', href: '#' },

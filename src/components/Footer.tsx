@@ -67,28 +67,31 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-300 text-sm">Head Office</p>
-                  <p className="text-gray-300 text-sm">123 Industrial Zone</p>
-                  <p className="text-gray-300 text-sm">Jubail, USA</p>
+                  <p className="text-gray-300 text-sm font-semibold">Head Office (Saudi Arabia)</p>
+                  <p className="text-gray-300 text-sm">Candour International Trading Company</p>
+                  <p className="text-gray-300 text-sm">Prince Naif Bin Abdulaziz Street</p>
+                  <p className="text-gray-300 text-sm">Building No 3294</p>
+                  <p className="text-gray-300 text-sm">Postal Code 35514</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">+1 (555) 123-4567</p>
+                <p className="text-gray-300 text-sm">+966 54 375 1793</p>
               </div>
               
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">info@candour-intl.com</p>
+                <p className="text-gray-300 text-sm">info@candourinternational.co</p>
               </div>
               
               <div className="flex items-center space-x-3">
                 <Globe className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                <p className="text-gray-300 text-sm">www.candour-intl.com</p>
+                <p className="text-gray-300 text-sm">www.candourinternational.co</p>
               </div>
             </div>
           </div>
+
         </div>
 
         {/* Bottom Section */}
