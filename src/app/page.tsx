@@ -9,6 +9,7 @@ import QuoteRequestSection from '@/components/QuoteRequestSection';
 import LogoSection from '@/components/LogoSection';
 import OurOfficesSection from '@/components/OurOfficesSection';
 import ServicesPricingSection from '@/components/ServicesPricingSection';
+import BlogSection from '@/components/BlogSection';
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <ConstructionHeroSection2 />
       <QuoteRequestSection />
       <LogoSection />
+      <BlogSection />
       <OurOfficesSection />
     </div>
   );

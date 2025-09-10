@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
 export default function Header() {
@@ -54,7 +55,7 @@ export default function Header() {
         { name: 'KolArc Welding', href: '/brands/kolarc' }
       ]
     },
-    { name: 'Blog', href: '#' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '#' }
   ];
 
@@ -64,13 +65,15 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 sm:h-20 lg:h-28">
           {/* Logo */}
           <div className="flex items-center">
-            <Image
-              src="/logo.png"
-              alt="Logo"
-              width={200}
-              height={50}
-              className="w-32 sm:w-40 lg:w-60"
-            />
+            <Link href="/" className="transition-transform duration-300 hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt="Candour International Logo"
+                width={200}
+                height={50}
+                className="w-32 sm:w-40 lg:w-60"
+              />
+            </Link>
           </div>
 
           {/* Desktop Navigation Links */}
@@ -124,7 +127,15 @@ export default function Header() {
           {/* Right side - CTA Button and Mobile Menu */}
           <div className="flex items-center space-x-2 sm:space-x-4">
             {/* CTA Button */}
-            <button className="bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-bold px-3 sm:px-4 lg:px-6 xl:px-8 py-2 sm:py-3 lg:py-4 rounded-lg text-xs sm:text-sm lg:text-base xl:text-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:shadow-orange-500/25 relative overflow-hidden group border-2 border-transparent hover:border-orange-500 whitespace-nowrap">
+            <button 
+              onClick={() => {
+                const quoteSection = document.getElementById('quote-section');
+                if (quoteSection) {
+                  quoteSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="bg-orange-500 hover:bg-white text-white hover:text-orange-500 font-bold px-3 sm:px-4 lg:px-6 xl:px-8 py-2 sm:py-3 lg:py-4 rounded-lg text-xs sm:text-sm lg:text-base xl:text-lg transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:shadow-orange-500/25 relative overflow-hidden group border-2 border-transparent hover:border-orange-500 whitespace-nowrap"
+            >
               <span className="relative z-10 hidden sm:inline">GET A QUOTE</span>
               <span className="relative z-10 sm:hidden">QUOTE</span>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out"></div>

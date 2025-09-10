@@ -37,7 +37,7 @@ export default function QuoteRequestSection() {
   }, []);
 
   return (
-    <div className="bg-gray-100 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+    <div id="quote-section" className="bg-gray-100 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
           
