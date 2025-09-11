@@ -41,7 +41,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 1,
       name: "Coal Mine",
-      image: "/banner.jpg", // Using existing image as placeholder
+      image: "/images/content/banner.jpg", // Using existing image as placeholder
       icon: <HardHat className="w-8 h-8" />,
       description: "Complete MRO solutions for upstream, midstream, and downstream operations",
       bgColor: "bg-gray-600"
@@ -49,7 +49,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 2,
       name: "Steel",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Factory className="w-8 h-8" />,
       description: "Specialized equipment and materials for chemical processing plants",
       bgColor: "bg-red-500"
@@ -57,7 +57,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 3,
       name: "Oil",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Fuel className="w-8 h-8" />,
       description: "Critical spares and maintenance solutions for power plants",
       bgColor: "bg-blue-500"
@@ -65,7 +65,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 4,
       name: "Gas",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Zap className="w-8 h-8" />,
       description: "Heavy-duty equipment and safety systems for mining operations",
       bgColor: "bg-cyan-500"
@@ -73,7 +73,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 5,
       name: "Power Station",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Settings className="w-8 h-8" />,
       description: "Industrial machinery and automation solutions",
       bgColor: "bg-yellow-500"
@@ -81,7 +81,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 6,
       name: "Chemistry",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Cog className="w-8 h-8" />,
       description: "Tools, equipment, and materials for construction projects",
       bgColor: "bg-purple-500"
@@ -89,7 +89,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 7,
       name: "Lab",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Shield className="w-8 h-8" />,
       description: "Specialized equipment for marine and offshore operations",
       bgColor: "bg-green-500"
@@ -97,7 +97,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 8,
       name: "Biogas",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Globe className="w-8 h-8" />,
       description: "Pumps, valves, and treatment equipment for water facilities",
       bgColor: "bg-teal-500"
@@ -105,7 +105,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 9,
       name: "Municipal",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Wrench className="w-8 h-8" />,
       description: "Hygienic equipment and processing solutions",
       bgColor: "bg-orange-500"
@@ -113,7 +113,7 @@ export default function IndustriesWeServeSection() {
     {
       id: 10,
       name: "Food & Beverage",
-      image: "/banner.jpg",
+      image: "/images/content/banner.jpg",
       icon: <Award className="w-8 h-8" />,
       description: "Precision equipment and compliance solutions",
       bgColor: "bg-pink-500"

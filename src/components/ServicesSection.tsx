@@ -8,21 +8,21 @@ const services = [
         id: 1,
         title: "MRO Division",
         icon: Building2,
-        image: "/MRO.png",
+        image: "/images/services/MRO.png",
         description: "Comprehensive maintenance, repair, and operations solutions for industrial equipment"
     },
     {
         id: 2,
         title: "Tools Consumables Division",
         icon: Wrench,
-        image: "/Tools.jpg",
+        image: "/images/content/Tools.jpg",
         description: "High-quality tools and consumables for all industrial applications"
     },
     {
         id: 3,
         title: "Projects Division",
         icon: HardHat,
-        image: "/Project.jpg",
+        image: "/images/content/Project.jpg",
         description: "End-to-end project management and execution for complex industrial projects"
     }
 ];

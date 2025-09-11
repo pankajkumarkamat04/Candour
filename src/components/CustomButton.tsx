@@ -9,9 +9,20 @@ interface CustomButtonProps {
 }
 
 export default function CustomButton({ text, onClick, className = '' }: CustomButtonProps) {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else if (text.toLowerCase().includes('quote')) {
+      const quoteSection = document.getElementById('quote-section');
+      if (quoteSection) {
+        quoteSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <button 
-      onClick={onClick}
+      onClick={handleClick}
       className={`flex items-center overflow-hidden transition-all duration-300 hover:scale-105 group ${className}`}
     >
       {/* Orange Text Section */}

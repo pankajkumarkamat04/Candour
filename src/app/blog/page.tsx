@@ -3,7 +3,18 @@
 import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
+import { Calendar, User, ArrowRight, Clock, BookOpen } from 'lucide-react';
+
+interface BlogPost {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  featured_image: string;
+  author_name: string;
+  created_at: string;
+}
 
 export default function BlogPage() {
   const [isVisible, setIsVisible] = useState({
@@ -12,9 +23,16 @@ export default function BlogPage() {
     posts: false
   });
 
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const heroRef = useRef<HTMLDivElement>(null);
   const featuredRef = useRef<HTMLDivElement>(null);
   const postsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -41,91 +59,48 @@ export default function BlogPage() {
     if (postsRef.current) observer.observe(postsRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [blogPosts]);
 
-  const blogPosts = [
-    {
-      id: 1,
-      slug: 'future-industrial-maintenance-smart-mro-solutions',
-      title: 'The Future of Industrial Maintenance: Smart MRO Solutions',
-      excerpt: 'Explore how smart maintenance solutions are revolutionizing industrial operations and reducing downtime.',
-      content: 'In today\'s rapidly evolving industrial landscape, smart maintenance solutions are becoming the cornerstone of operational excellence. Companies are increasingly adopting predictive maintenance technologies, IoT sensors, and AI-driven analytics to optimize their maintenance, repair, and operations (MRO) processes. This transformation not only reduces unexpected downtime but also significantly lowers operational costs while improving overall equipment effectiveness.',
-      author: 'John Smith',
-      date: '2024-01-15',
-      readTime: '5 min read',
-      category: 'Technology',
-      image: '/banner.jpg',
-      featured: true
-    },
-    {
-      id: 2,
-      slug: 'sustainable-manufacturing-green-tools-better-tomorrow',
-      title: 'Sustainable Manufacturing: Green Tools for a Better Tomorrow',
-      excerpt: 'Discover how eco-friendly tools and sustainable practices are shaping the future of manufacturing.',
-      content: 'Sustainability in manufacturing is no longer a choice but a necessity. As environmental concerns continue to grow, manufacturers are turning to green tools and sustainable practices to reduce their carbon footprint. From energy-efficient power tools to recyclable materials, the industry is embracing innovative solutions that balance productivity with environmental responsibility.',
-      author: 'Sarah Johnson',
-      date: '2024-01-10',
-      readTime: '4 min read',
-      category: 'Sustainability',
-      image: '/Tools.jpg',
-      featured: false
-    },
-    {
-      id: 3,
-      slug: 'welding-technology-advancements-precision-efficiency',
-      title: 'Welding Technology Advancements: Precision and Efficiency',
-      excerpt: 'Learn about the latest innovations in welding technology that are improving precision and efficiency.',
-      content: 'Welding technology has seen remarkable advancements in recent years, with new techniques and equipment that offer unprecedented precision and efficiency. From automated welding systems to advanced consumables, these innovations are enabling manufacturers to achieve higher quality welds while reducing material waste and production time.',
-      author: 'Mike Chen',
-      date: '2024-01-05',
-      readTime: '6 min read',
-      category: 'Technology',
-      image: '/Project.jpg',
-      featured: false
-    },
-    {
-      id: 4,
-      slug: 'supply-chain-optimization-mro-industry',
-      title: 'Supply Chain Optimization in the MRO Industry',
-      excerpt: 'Understanding how to optimize supply chains for better MRO operations and cost efficiency.',
-      content: 'Supply chain optimization is critical for MRO operations, especially in today\'s globalized economy. Companies are leveraging advanced analytics, real-time tracking, and strategic partnerships to ensure timely delivery of critical spare parts and consumables. This approach not only reduces inventory costs but also minimizes production disruptions.',
-      author: 'Emily Davis',
-      date: '2024-01-01',
-      readTime: '7 min read',
-      category: 'Operations',
-      image: '/MRO.png',
-      featured: false
-    },
-    {
-      id: 5,
-      slug: 'safety-first-best-practices-industrial-tool-usage',
-      title: 'Safety First: Best Practices in Industrial Tool Usage',
-      excerpt: 'Essential safety guidelines and best practices for using industrial tools and equipment.',
-      content: 'Safety is paramount in industrial environments, and proper tool usage is a critical component of workplace safety. This comprehensive guide covers essential safety protocols, proper tool maintenance, and training requirements that help prevent accidents and ensure worker protection in industrial settings.',
-      author: 'David Wilson',
-      date: '2023-12-28',
-      readTime: '5 min read',
-      category: 'Safety',
-      image: '/industrial.png',
-      featured: false
-    },
-    {
-      id: 6,
-      slug: 'digital-transformation-industrial-procurement',
-      title: 'Digital Transformation in Industrial Procurement',
-      excerpt: 'How digital technologies are revolutionizing the way companies procure industrial supplies.',
-      content: 'Digital transformation is reshaping industrial procurement, making it more efficient, transparent, and cost-effective. From e-procurement platforms to AI-powered supplier selection, companies are leveraging technology to streamline their purchasing processes and make more informed decisions about their industrial supplies.',
-      author: 'Lisa Anderson',
-      date: '2023-12-25',
-      readTime: '6 min read',
-      category: 'Digital',
-      image: '/banner.jpg',
-      featured: false
+  const fetchBlogPosts = async () => {
+    try {
+      const response = await fetch('/api/blogs');
+      const data = await response.json();
+
+      if (data.success) {
+        setBlogPosts(data.blogs || []);
+      }
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  const featuredPost = blogPosts.find(post => post.featured);
-  const regularPosts = blogPosts.filter(post => !post.featured);
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const calculateReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const wordCount = content.split(/\s+/).length;
+    const readTime = Math.ceil(wordCount / wordsPerMinute);
+    return `${readTime} min read`;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  const featuredPost = blogPosts[0]; // First post as featured
+  const regularPosts = blogPosts.slice(1);
 
   return (
     <div className="min-h-screen bg-white">
@@ -176,17 +151,23 @@ export default function BlogPage() {
             <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                 <div className="relative">
-                  <Image
-                    src={featuredPost.image}
-                    alt={featuredPost.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-64 sm:h-80 lg:h-full object-cover"
-                    priority
-                  />
+                  {featuredPost.featured_image ? (
+                    <Image
+                      src={featuredPost.featured_image}
+                      alt={featuredPost.title}
+                      width={600}
+                      height={400}
+                      className="w-full h-64 sm:h-80 lg:h-full object-cover"
+                      priority
+                    />
+                  ) : (
+                    <div className="w-full h-64 sm:h-80 lg:h-full bg-gray-200 flex items-center justify-center">
+                      <BookOpen className="w-16 h-16 text-gray-400" />
+                    </div>
+                  )}
                   <div className="absolute top-4 left-4">
                     <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-                      {featuredPost.category}
+                      Blog Post
                     </span>
                   </div>
                 </div>
@@ -195,21 +176,21 @@ export default function BlogPage() {
                     {featuredPost.title}
                   </h3>
                   <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 leading-relaxed">
-                    {featuredPost.content}
+                    {featuredPost.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4 text-sm text-gray-500">
                       <div className="flex items-center">
                         <User className="w-4 h-4 mr-2" />
-                        <span>{featuredPost.author}</span>
+                        <span>{featuredPost.author_name}</span>
                       </div>
                       <div className="flex items-center">
                         <Calendar className="w-4 h-4 mr-2" />
-                        <span>{new Date(featuredPost.date).toLocaleDateString()}</span>
+                        <span>{formatDate(featuredPost.created_at)}</span>
                       </div>
                       <div className="flex items-center">
                         <Clock className="w-4 h-4 mr-2" />
-                        <span>{featuredPost.readTime}</span>
+                        <span>{calculateReadTime(featuredPost.content)}</span>
                       </div>
                     </div>
                      <Link 
@@ -257,16 +238,22 @@ export default function BlogPage() {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="relative">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={400}
-                    height={250}
-                    className="w-full h-48 sm:h-56 object-cover"
-                  />
+                  {post.featured_image ? (
+                    <Image
+                      src={post.featured_image}
+                      alt={post.title}
+                      width={400}
+                      height={250}
+                      className="w-full h-48 sm:h-56 object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-48 sm:h-56 bg-gray-200 flex items-center justify-center">
+                      <BookOpen className="w-12 h-12 text-gray-400" />
+                    </div>
+                  )}
                   <div className="absolute top-4 left-4">
                     <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                      {post.category}
+                      Blog Post
                     </span>
                   </div>
                 </div>
@@ -280,15 +267,15 @@ export default function BlogPage() {
                   <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-4">
                     <div className="flex items-center">
                       <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span>{post.author}</span>
+                      <span>{post.author_name}</span>
                     </div>
                     <div className="flex items-center">
                       <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span>{new Date(post.date).toLocaleDateString()}</span>
+                      <span>{formatDate(post.created_at)}</span>
                     </div>
                     <div className="flex items-center">
                       <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                      <span>{post.readTime}</span>
+                      <span>{calculateReadTime(post.content)}</span>
                     </div>
                   </div>
                    <Link 

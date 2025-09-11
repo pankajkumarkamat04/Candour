@@ -198,7 +198,7 @@ export default function ProjectsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
             <div>
               <Image
-                src="/Project.jpg"
+                src="/images/content/Project.jpg"
                 alt="Projects Division"
                 width={600}
                 height={400}

@@ -108,7 +108,7 @@ export default function ConstructionCompanyHero() {
             {/* Main Construction Workers Image */}
             <div className="relative w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-[5/4]">
               <Image
-                src="/banner.jpg"
+                src="/images/content/banner.jpg"
                 alt="Construction workers discussing blueprints"
                 fill
                 className="object-cover shadow-2xl"

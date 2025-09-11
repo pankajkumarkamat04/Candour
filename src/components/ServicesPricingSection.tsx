@@ -10,21 +10,21 @@ const services = [
         title: "Customized Solutions",
         number: "01",
         description: "We thoroughly assess your procurement processes and MRO requirements to deliver customized solutions aligned with your specific objectives.",
-        image: "/MRO.png"
+        image: "/images/services/MRO.png"
     },
     {
         id: 2,
         title: "Global Supplier Reach",
         number: "02",
         description: "Our strategic partnerships with a diverse supplier network across the globe, ensuring consistent quality and service through regular evaluations and feedback.",
-        image: "/Tools.jpg"
+        image: "/images/content/Tools.jpg"
     },
     {
         id: 3,
         title: "Seamless Integration",
         number: "03",
         description: "By leveraging advanced procurement technologies and seamless system with ERP's, we enhance the efficiency of your procurement operations.",
-        image: "/Project.jpg"
+        image: "/images/content/Project.jpg"
     }
 ];
 
@@ -34,7 +34,7 @@ export default function ServicesPricingSection() {
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src="/banner.jpg"
+                    src="/images/content/banner.jpg"
                     alt="Construction Background"
                     fill
                     className="object-cover opacity-20"

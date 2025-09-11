@@ -221,7 +221,7 @@ export default function KolArcWeldingPage() {
               >
                 <div className="mb-4">
                   <Image
-                    src={index === 0 ? "/Tools.jpg" : "/Project.jpg"}
+                    src={index === 0 ? "/images/content/Tools.jpg" : "/images/content/Project.jpg"}
                     alt={category.name}
                     width={400}
                     height={250}
@@ -274,7 +274,7 @@ export default function KolArcWeldingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
             <div>
               <Image
-                src="/MRO.png"
+                src="/images/services/MRO.png"
                 alt="KolArc Cloud Software"
                 width={600}
                 height={400}

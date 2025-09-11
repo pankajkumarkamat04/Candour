@@ -2,12 +2,24 @@
 
 import { ChevronDown, HardHat } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { toast } from 'react-hot-toast';
+// import { useSettings } from '@/contexts/SettingsContext';
 
 export default function QuoteRequestSection() {
+  // const { settings } = useSettings();
   const [isVisible, setIsVisible] = useState({
     form: false,
     content: false
   });
+  const [formData, setFormData] = useState({
+    fullName: '',
+    company: '',
+    email: '',
+    phone: '',
+    projectType: '',
+    description: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -36,21 +48,65 @@ export default function QuoteRequestSection() {
     return () => observer.disconnect();
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Submit quote request to API
+      const response = await fetch('/api/quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success(`Quote request submitted successfully! We'll get back to you within 24 hours at ${formData.email}.`);
+        setFormData({
+          fullName: '',
+          company: '',
+          email: '',
+          phone: '',
+          projectType: '',
+          description: ''
+        });
+      } else {
+        toast.error(result.error || 'Failed to submit quote request. Please try again.');
+      }
+    } catch (error) {
+      console.error('Quote submission error:', error);
+      toast.error('Failed to submit quote request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div id="quote-section" className="bg-gray-100 py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12">
-          
+
           {/* Left Side - Simple Quote Form */}
-          <div 
+          <div
             ref={formRef}
-            className={`bg-gray-900 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 transition-all duration-1000 ${
-              isVisible.form 
-                ? 'opacity-100 translate-x-0 scale-100' 
+            className={`bg-gray-900 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 transition-all duration-1000 ${isVisible.form
+                ? 'opacity-100 translate-x-0 scale-100'
                 : 'opacity-0 -translate-x-8 scale-95'
-            }`}
+              }`}
           >
-            <div className="space-y-4 sm:space-y-5 md:space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
               {/* Form Title */}
               <div className="text-center mb-6 sm:mb-7 md:mb-8">
                 <h3 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">Get Your Quote</h3>
@@ -65,6 +121,10 @@ export default function QuoteRequestSection() {
                   </label>
                   <input
                     type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    required
                     className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 focus:outline-none focus:border-orange-500"
                     placeholder="Enter your full name"
                   />
@@ -75,6 +135,10 @@ export default function QuoteRequestSection() {
                   </label>
                   <input
                     type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    required
                     className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 focus:outline-none focus:border-orange-500"
                     placeholder="Enter company name"
                   />
@@ -88,6 +152,10 @@ export default function QuoteRequestSection() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
                     className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 focus:outline-none focus:border-orange-500"
                     placeholder="Enter your email"
                   />
@@ -98,6 +166,10 @@ export default function QuoteRequestSection() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
                     className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 focus:outline-none focus:border-orange-500"
                     placeholder="Enter your phone"
                   />
@@ -110,7 +182,12 @@ export default function QuoteRequestSection() {
                   Project Type
                 </label>
                 <div className="relative">
-                  <select className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 appearance-none focus:outline-none focus:border-orange-500">
+                  <select
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleInputChange}
+                    className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 appearance-none focus:outline-none focus:border-orange-500"
+                  >
                     <option value="">Select project type</option>
                     <option value="MRO Supplies">MRO Supplies</option>
                     <option value="Industrial Equipment">Industrial Equipment</option>
@@ -127,6 +204,9 @@ export default function QuoteRequestSection() {
                   Project Description
                 </label>
                 <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
                   rows={3}
                   className="w-full bg-gray-800 text-white px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border border-gray-700 focus:outline-none focus:border-orange-500 resize-none"
                   placeholder="Describe your project requirements..."
@@ -135,21 +215,24 @@ export default function QuoteRequestSection() {
 
               {/* Submit Button */}
               <div className="pt-3 sm:pt-4">
-                <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base transition-colors duration-300">
-                  Request Quote
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-400 disabled:cursor-not-allowed text-white font-bold py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base transition-colors duration-300"
+                >
+                  {isSubmitting ? 'Submitting...' : 'Request Quote'}
                 </button>
               </div>
-            </div>
+            </form>
           </div>
 
           {/* Right Side - Light Information Section */}
-          <div 
+          <div
             ref={contentRef}
-            className={`bg-white p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 relative overflow-hidden transition-all duration-1000 delay-300 ${
-              isVisible.content 
-                ? 'opacity-100 translate-x-0 scale-100' 
+            className={`bg-white p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 relative overflow-hidden transition-all duration-1000 delay-300 ${isVisible.content
+                ? 'opacity-100 translate-x-0 scale-100'
                 : 'opacity-0 translate-x-8 scale-95'
-            }`}
+              }`}
           >
             {/* Header */}
             <div className="mb-6 sm:mb-7 md:mb-8">

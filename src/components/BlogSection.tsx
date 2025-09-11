@@ -5,14 +5,31 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
 
+interface BlogPost {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  author_name: string;
+  created_at: string;
+  featured_image: string;
+  category: string;
+}
+
 export default function BlogSection() {
   const [isVisible, setIsVisible] = useState({
     heading: false,
     posts: false
   });
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const headingRef = useRef<HTMLDivElement>(null);
   const postsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchBlogPosts();
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -38,41 +55,31 @@ export default function BlogSection() {
     return () => observer.disconnect();
   }, []);
 
-  const blogPosts = [
-    {
-      id: 1,
-      slug: 'future-industrial-maintenance-smart-mro-solutions',
-      title: 'The Future of Industrial Maintenance: Smart MRO Solutions',
-      excerpt: 'Explore how smart maintenance solutions are revolutionizing industrial operations and reducing downtime.',
-      author: 'John Smith',
-      date: '2024-01-15',
-      readTime: '5 min read',
-      category: 'Technology',
-      image: '/banner.jpg'
-    },
-    {
-      id: 2,
-      slug: 'sustainable-manufacturing-green-tools-better-tomorrow',
-      title: 'Sustainable Manufacturing: Green Tools for a Better Tomorrow',
-      excerpt: 'Discover how eco-friendly tools and sustainable practices are shaping the future of manufacturing.',
-      author: 'Sarah Johnson',
-      date: '2024-01-10',
-      readTime: '4 min read',
-      category: 'Sustainability',
-      image: '/Tools.jpg'
-    },
-    {
-      id: 3,
-      slug: 'welding-technology-advancements-precision-efficiency',
-      title: 'Welding Technology Advancements: Precision and Efficiency',
-      excerpt: 'Learn about the latest innovations in welding technology that are improving precision and efficiency.',
-      author: 'Mike Chen',
-      date: '2024-01-05',
-      readTime: '6 min read',
-      category: 'Technology',
-      image: '/Project.jpg'
+  const fetchBlogPosts = async () => {
+    try {
+      const response = await fetch('/api/blogs');
+      const data = await response.json();
+      
+      if (data.success) {
+        setBlogPosts(data.blogs.slice(0, 3)); // Show only first 3 posts
+      }
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString();
+  };
+
+  const getReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const wordCount = content.split(' ').length;
+    const readTime = Math.ceil(wordCount / wordsPerMinute);
+    return `${readTime} min read`;
+  };
 
   return (
     <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28 bg-gray-50">
@@ -104,61 +111,85 @@ export default function BlogSection() {
               : 'opacity-0 translate-y-8'
           }`}
         >
-          {blogPosts.map((post, index) => (
-            <article 
-              key={post.id}
-              className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden ${
-                isVisible.posts 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${index * 150}ms` }}
-            >
-              <div className="relative">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  width={400}
-                  height={250}
-                  className="w-full h-48 sm:h-56 object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                    {post.category}
-                  </span>
+          {loading ? (
+            // Loading skeleton
+            Array.from({ length: 3 }).map((_, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
+                <div className="w-full h-48 sm:h-56 bg-gray-300"></div>
+                <div className="p-4 sm:p-6">
+                  <div className="h-6 bg-gray-300 rounded mb-3"></div>
+                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-300 rounded mb-4"></div>
+                  <div className="flex justify-between mb-4">
+                    <div className="h-3 bg-gray-300 rounded w-20"></div>
+                    <div className="h-3 bg-gray-300 rounded w-16"></div>
+                    <div className="h-3 bg-gray-300 rounded w-12"></div>
+                  </div>
+                  <div className="h-10 bg-gray-300 rounded"></div>
                 </div>
               </div>
-              <div className="p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 text-sm sm:text-base mb-4 leading-relaxed line-clamp-3">
-                  {post.excerpt}
-                </p>
-                <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-4">
-                  <div className="flex items-center">
-                    <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                    <span>{post.author}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                    <span>{new Date(post.date).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                    <span>{post.readTime}</span>
+            ))
+          ) : blogPosts.length > 0 ? (
+            blogPosts.map((post, index) => (
+              <article 
+                key={post.id}
+                className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden ${
+                  isVisible.posts 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <div className="relative">
+                  <Image
+                    src={post.featured_image || '/banner.jpg'}
+                    alt={post.title}
+                    width={400}
+                    height={250}
+                    className="w-full h-48 sm:h-56 object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      {post.category || 'General'}
+                    </span>
                   </div>
                 </div>
-                  <Link 
-                    href={`/blog/${post.slug}`}
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center"
-                  >
-                    Read More
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-              </div>
-            </article>
-          ))}
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm sm:text-base mb-4 leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-4">
+                    <div className="flex items-center">
+                      <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                      <span>{post.author_name}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                      <span>{formatDate(post.created_at)}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                      <span>{getReadTime(post.excerpt)}</span>
+                    </div>
+                  </div>
+                    <Link 
+                      href={`/blog/${post.slug}`}
+                      className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center"
+                    >
+                      Read More
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                </div>
+              </article>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-500 text-lg">No blog posts available yet.</p>
+            </div>
+          )}
         </div>
 
         {/* View More Button */}

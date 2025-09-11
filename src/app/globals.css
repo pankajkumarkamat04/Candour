@@ -19,6 +19,60 @@
   }
 }
 
+/* Admin panel specific styles */
+[data-admin="true"] input,
+[data-admin="true"] textarea,
+[data-admin="true"] select {
+  color: #111827 !important;
+}
+
+/* Ensure admin input text is always black */
+.admin-layout input,
+.admin-layout textarea,
+.admin-layout select {
+  color: #111827 !important;
+}
+
+/* Admin panel improvements */
+.admin-layout {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Enhanced card shadows for admin */
+.admin-layout .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.admin-layout .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Smooth transitions for admin elements */
+.admin-layout * {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom scrollbar for admin */
+.admin-layout ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-layout ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.admin-layout ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.admin-layout ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

@@ -53,7 +53,7 @@ export default function HeroSection() {
       {/* Banner Background with Mixed Orange and Black Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="/banner.jpg"
+          src="/images/content/banner.jpg"
           alt="Construction Background"
           fill
           className="object-cover"
@@ -65,7 +65,7 @@ export default function HeroSection() {
       {/* Industrial Icon on Left - Hidden on mobile, visible on larger screens */}
       <div className="hidden sm:block absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20">
         <Image
-          src="/Industrial.png"
+          src="/images/services/industrial.png"
           alt="Industrial Icon"
           width={1000}
           height={1000}

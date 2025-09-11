@@ -52,7 +52,7 @@ export default function ConstructionHeroSection2() {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <Image
-          src="/banner.jpg"
+          src="/images/content/banner.jpg"
           alt="Construction site background"
           fill
           className="object-cover"

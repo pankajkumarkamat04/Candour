@@ -117,7 +117,7 @@ export default function OurOfficesSection() {
         >
           {/* World Map Image */}
           <Image
-            src="/map.jpg"
+            src="/images/content/map.jpg"
             alt="World Map with Office Locations"
             fill
             className="object-contain"

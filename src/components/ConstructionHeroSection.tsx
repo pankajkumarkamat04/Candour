@@ -75,7 +75,7 @@ export default function ConstructionHeroSection() {
                         {/* First Image - 50% width, positioned left and moved up */}
                         <div className="absolute left-0 -top-3 sm:-top-4 lg:-top-6 w-1/2 h-48 sm:h-64 md:h-80 lg:h-96 z-10">
                             <Image
-                                src="/MRO.png"
+                                src="/images/services/MRO.png"
                                 alt="Industrial MRO Equipment"
                                 fill
                                 className="object-cover shadow-lg"
@@ -86,7 +86,7 @@ export default function ConstructionHeroSection() {
                         {/* Second Image - 50% width, positioned right with overlap and moved down */}
                         <div className="absolute right-0 top-3 sm:top-4 lg:top-6 w-1/2 h-48 sm:h-64 md:h-80 lg:h-96 z-20 -ml-4 sm:-ml-6 lg:-ml-8">
                             <Image
-                                src="/Tools.jpg"
+                                src="/images/content/Tools.jpg"
                                 alt="Industrial Tools and Consumables"
                                 fill
                                 className="object-cover shadow-lg"
@@ -100,7 +100,7 @@ export default function ConstructionHeroSection() {
                         {/* Background Building Image */}
                         <div className="absolute -bottom-8 -right-8 w-64 h-80 sm:w-80 sm:h-96 lg:w-96 lg:h-[500px] opacity-10 z-0">
                             <Image
-                                src="/MRO.png"
+                                src="/images/services/MRO.png"
                                 alt="Background Building"
                                 fill
                                 className="object-cover"

@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ConditionalHeader from "@/components/ConditionalHeader";
-import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { SettingsProvider } from "@/contexts/SettingsContext";
+import DynamicMetadata from "@/components/DynamicMetadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,13 +22,13 @@ export const metadata: Metadata = {
   description: "Candour International provides comprehensive MRO and procurement solutions across diverse industries, ensuring reliable supply chains and operational excellence for our global clients.",
   icons: {
     icon: [
-      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.png', sizes: '16x16', type: 'image/png' }
+      { url: '/images/branding/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/branding/favicon.png', sizes: '16x16', type: 'image/png' }
     ],
     apple: [
-      { url: '/favicon.png', sizes: '180x180', type: 'image/png' }
+      { url: '/images/branding/favicon.png', sizes: '180x180', type: 'image/png' }
     ],
-    shortcut: '/favicon.png',
+    shortcut: '/images/branding/favicon.png',
   },
 };
 
@@ -39,9 +42,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ConditionalHeader />
-        {children}
-        <Footer />
+        <SettingsProvider>
+          <DynamicMetadata />
+          <ConditionalHeader />
+          {children}
+          <ConditionalFooter />
+          <WhatsAppButton />
+        </SettingsProvider>
       </body>
     </html>
   );

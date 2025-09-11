@@ -37,14 +37,14 @@ export default function LogoSection() {
   }, []);
 
   const logos = [
-    { id: 1, src: '/logo1.jpg', alt: 'Partner Logo 1' },
-    { id: 2, src: '/logo2.png', alt: 'Partner Logo 2' },
-    { id: 3, src: '/logo3.jpg', alt: 'Partner Logo 3' },
-    { id: 4, src: '/logo4.png', alt: 'Partner Logo 4' },
-    { id: 5, src: '/logo5.jpg', alt: 'Partner Logo 5' },
-    { id: 6, src: '/logo6.jpg', alt: 'Partner Logo 6' },
-    { id: 7, src: '/logo7.png', alt: 'Partner Logo 7' },
-    { id: 8, src: '/logo8.jpg', alt: 'Partner Logo 8' }
+    { id: 1, src: '/images/branding/logo1.jpg', alt: 'Partner Logo 1' },
+    { id: 2, src: '/images/branding/logo2.png', alt: 'Partner Logo 2' },
+    { id: 3, src: '/images/branding/logo3.jpg', alt: 'Partner Logo 3' },
+    { id: 4, src: '/images/branding/logo4.png', alt: 'Partner Logo 4' },
+    { id: 5, src: '/images/branding/logo5.jpg', alt: 'Partner Logo 5' },
+    { id: 6, src: '/images/branding/logo6.jpg', alt: 'Partner Logo 6' },
+    { id: 7, src: '/images/branding/logo7.png', alt: 'Partner Logo 7' },
+    { id: 8, src: '/images/branding/logo8.jpg', alt: 'Partner Logo 8' }
   ];
 
   return (

@@ -231,7 +231,7 @@ export default function ToolsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
             <div>
               <Image
-                src="/Tools.jpg"
+                src="/images/content/Tools.jpg"
                 alt="Tools Division"
                 width={600}
                 height={400}

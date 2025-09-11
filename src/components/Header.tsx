@@ -4,11 +4,13 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { useSettings } from '@/contexts/SettingsContext';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const { settings } = useSettings();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -56,7 +58,7 @@ export default function Header() {
       ]
     },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '#' }
+    { name: 'Contact', href: '#quote-section' }
   ];
 
   return (
@@ -67,8 +69,8 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="transition-transform duration-300 hover:scale-105">
               <Image
-                src="/logo.png"
-                alt="Candour International Logo"
+                src={settings.logo_url || "/images/branding/logo.png"}
+                alt={settings.site_name || "Candour International Logo"}
                 width={200}
                 height={50}
                 className="w-32 sm:w-40 lg:w-60"
