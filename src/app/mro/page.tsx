@@ -203,7 +203,7 @@ export default function MROPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
             <div>
               <Image
-                src="/mro1.jpg"
+                src="/images/services/mro1.jpg"
                 alt="MRO Division"
                 width={600}
                 height={400}
