@@ -47,7 +47,7 @@ export default function RootLayout({
           <ConditionalHeader />
           {children}
           <ConditionalFooter />
-          <WhatsAppButton />
+          <WhatsAppButton phoneNumber="+966559140268" />
         </SettingsProvider>
       </body>
     </html>

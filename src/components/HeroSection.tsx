@@ -62,17 +62,6 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-black/40 to-orange-600/25"></div>
       </div>
 
-      {/* Industrial Icon on Left - Hidden on mobile, visible on larger screens */}
-      <div className="hidden sm:block absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20">
-        <Image
-          src="/images/services/industrial.png"
-          alt="Industrial Icon"
-          width={1000}
-          height={1000}
-          className="w-32 sm:w-48 lg:w-64 xl:w-full"
-        />
-      </div>
-
       {/* Sharp Circle Background - Responsive sizing */}
       <div className="absolute inset-0 flex items-center justify-center z-5">
         <div className="w-64 h-64 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] xl:w-[800px] xl:h-[800px] bg-orange-500/30 rounded-full transform -translate-x-8 sm:-translate-x-12 lg:-translate-x-20"></div>
