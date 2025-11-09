@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { Building2, Wrench, HardHat } from 'lucide-react';
 
 const services = [
@@ -9,21 +10,24 @@ const services = [
         title: "MRO Division",
         icon: Building2,
         image: "/images/services/MRO.png",
-        description: "Comprehensive maintenance, repair, and operations solutions for industrial equipment"
+        description: "Comprehensive maintenance, repair, and operations solutions for industrial equipment",
+        href: "/mro"
     },
     {
         id: 2,
         title: "Tools Consumables Division",
         icon: Wrench,
         image: "/images/content/Tools.jpg",
-        description: "High-quality tools and consumables for all industrial applications"
+        description: "High-quality tools and consumables for all industrial applications",
+        href: "/tools"
     },
     {
         id: 3,
         title: "Projects Division",
         icon: HardHat,
         image: "/images/content/Project.jpg",
-        description: "End-to-end project management and execution for complex industrial projects"
+        description: "End-to-end project management and execution for complex industrial projects",
+        href: "/projects"
     }
 ];
 
@@ -89,28 +93,35 @@ export default function ServicesSection() {
                             : 'opacity-0 translate-y-12'
                     }`}
                 >
-                    {services.map((service, index) => (
-                        <div
-                            key={index}
-                            className={`group cursor-pointer transition-all duration-500 ${
-                                isVisible.services 
-                                    ? 'opacity-100 translate-y-0 scale-100' 
-                                    : 'opacity-0 translate-y-8 scale-95'
-                            }`}
-                            style={{ 
-                                transitionDelay: isVisible.services ? `${index * 200}ms` : '0ms'
-                            }}
-                        >
-                            <div 
-                                className='w-full h-48 sm:h-56 lg:h-64 xl:h-100 bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105 overflow-hidden'
-                                style={{ backgroundImage: `url(${service.image})` }}
-                            ></div>
-                            <div className='mx-4 sm:mx-6 lg:mx-10 p-2 sm:p-3 group-hover:mx-0 bg-white -mt-8 sm:-mt-10 lg:-mt-12 relative z-10 transition-all duration-300 ease-in-out' >
-                                <div className='flex justify-center align-center pb-1 sm:pb-2'><Building2 className='w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-black' /></div>
-                                <h3 className='text-black text-center text-base sm:text-lg font-bold'>{service.title}</h3>
-                            </div>
-                        </div>
-                    ))}
+                    {services.map((service, index) => {
+                        const IconComponent = service.icon;
+                        return (
+                            <Link
+                                key={service.id}
+                                href={service.href}
+                                className={`group block transition-all duration-500 ${
+                                    isVisible.services 
+                                        ? 'opacity-100 translate-y-0 scale-100' 
+                                        : 'opacity-0 translate-y-8 scale-95'
+                                }`}
+                                style={{ 
+                                    transitionDelay: isVisible.services ? `${index * 200}ms` : '0ms'
+                                }}
+                                aria-label={`Learn more about ${service.title}`}
+                            >
+                                <div 
+                                    className='w-full h-48 sm:h-56 lg:h-64 xl:h-100 bg-cover bg-center bg-no-repeat transition-transform duration-300 ease-in-out group-hover:scale-105 overflow-hidden rounded-lg'
+                                    style={{ backgroundImage: `url(${service.image})` }}
+                                ></div>
+                                <div className='mx-4 sm:mx-6 lg:mx-10 p-2 sm:p-3 group-hover:mx-0 bg-white -mt-8 sm:-mt-10 lg:-mt-12 relative z-10 transition-all duration-300 ease-in-out rounded-lg shadow group-hover:shadow-lg' >
+                                    <div className='flex justify-center align-center pb-1 sm:pb-2'>
+                                        <IconComponent className='w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-black' />
+                                    </div>
+                                    <h3 className='text-black text-center text-base sm:text-lg font-bold'>{service.title}</h3>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
 
             </div>
